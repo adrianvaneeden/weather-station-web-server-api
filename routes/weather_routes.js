@@ -15,7 +15,7 @@ router
 router
     .route('/:id')
     .get(getWeatherRecord)
-    .put(addWeatherRecord)
+    .post(addWeatherRecord)
     .patch(updateWeatherRecord)
     .delete(deleteWeatherRecord);
 
