@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import colors from 'colors';
 import morgan from 'morgan';
+import cookeParser from 'cookie-parser';
 import errorHandler from './middleware/error.js';
 import connectDB from './config/db.js';
 // import logger from './middleware/logger.js';
@@ -21,6 +22,9 @@ const app = express();
 
 // Body parser
 app.use(express.json({ limit: '50mb' }));
+
+// Cookie Parser
+app.use(cookeParser());
 
 // app.use(express.limit('50M'));
 
@@ -50,5 +54,3 @@ process.on('unhandledRejection', (err, promise) => {
     // Close server & exit process
     server.close(() => process.exit(1));
 });
-
-

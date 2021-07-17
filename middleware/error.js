@@ -2,13 +2,13 @@ import colors from 'colors';
 import ErrorResponse from './utils/errorResponse.js';
 
 const errorHandler = (err, req, res, next) => {
-    let error = { ...err };
+    // Log to console for dev
+    console.log(err);
 
+    let error = { ...err };
     error.message = err.message;
 
-    // Log to console for dev
-    // console.log(err.stack.red);
-    // console.log(err);
+    console.log(error);
 
     // Mongoose bad ObjectID
     if (err.name === 'CastError') {
@@ -18,8 +18,8 @@ const errorHandler = (err, req, res, next) => {
 
     // Mongoose duplicate key
     if (err.code === 11000) {
-        const messate = 'Duplicate field value entered';
-        error = new ErrorResponse(message, 4000);
+        const message = 'Duplicate field value entered';
+        error = new ErrorResponse(message, 400);
     }
 
     // Mongoose valudation error
@@ -30,6 +30,7 @@ const errorHandler = (err, req, res, next) => {
 
     res.status(error.statusCode || 500).json({
         success: false,
+        // error: 'Server Error'
         error: error.message || 'Server Error'
     })
 }
